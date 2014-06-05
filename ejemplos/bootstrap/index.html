@@ -1,0 +1,97 @@
+<!doctype html>
+<html ng-app="app">
+    <head>
+        <meta charset="utf-8">
+        <title>Galeria</title>
+        <link rel="stylesheet" href="../../bower_components/angular-bootstrap-colorpicker/css/colorpicker.css">
+        <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="../../bower_components/angular-motion/dist/angular-motion.min.css">
+
+        <style>
+          [bs-popover] {
+            outline: 2px solid rgba(255,0,0,.1);
+            position: relative;
+          }
+
+          [bs-popover]:hover {
+            outline: 4px solid rgba(255,0,0,.5);
+          }
+        </style>
+    </head>
+  <body>
+
+    <script type="text/ng-template" id="popover">
+      <form class="form-horizontal" name="form">
+        <div class="form-group" ng-class="{'has-error': form.color.$invalid}">
+          <label class="col-sm-3 control-label"> Color texto</label>
+          <div class="col-sm-9">
+            <input 
+                class="form-control col-xs-9" 
+                type="text" 
+                name="color"
+                required
+                data-colorpicker="rgba" 
+                data-colorpicker-with-input="true" 
+                data-ng-model="title.color">
+          </div>
+        </div>
+
+        <div class="form-group" ng-class="{'has-error': form.fontsize.$invalid}">
+          <label class="col-sm-3 control-label">Tamaño</label>
+          <div class="col-sm-9">
+            <input 
+                class="form-control col-xs-9" 
+                type="text"
+                name="fontsize"
+                required
+                data-ng-pattern="/[0-9]+px/"
+                data-ng-model="title.fontSize">
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-danger" ng-click="$hide()">Close</button>
+          <button type="button" class="btn btn-primary" ng-click="popover.saved=true;$hide()">Save changes</button>
+        </div>
+      </form>
+    </script>
+
+    <div class="container" ng-controller="MainCtrl">
+
+      <div class="jumbotron">
+          <h1 
+            ng-style="title"
+            data-placement="bottom" 
+            data-animation="am-flip-x" 
+            
+            data-content-template="popover"
+            bs-popover
+            >
+              'Allo, 'Allo!
+          </h1>
+
+          <button 
+            type="button" 
+            class="btn btn-lg btn-success" 
+            data-animation="am-fade-and-slide-top" 
+            data-content-template="popover"
+            bs-modal="modal">
+            Splendid! <span class="glyphicon glyphicon-ok"></span>
+          </button>
+
+      </div>
+
+    </div>
+
+    <!-- bibliotecas -->
+    <script src="../../bower_components/angular/angular.js"></script>
+    <script src="../../bower_components/angular-animate/angular-animate.js"></script>
+    <script src="../../bower_components/angular-strap/dist/angular-strap.min.js"></script>
+    <script src="../../bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
+
+    <script src="../../bower_components/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.js"></script>
+
+    <!-- main.js -->
+    <script src="app.js"></script>
+
+</body>
+</html>

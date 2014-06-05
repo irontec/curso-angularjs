@@ -1,0 +1,1 @@
+![](assets/crud.new.png)

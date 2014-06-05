@@ -1,0 +1,57 @@
+<!doctype html>
+<html ng-app="app">
+    <head>
+        <meta charset="utf-8">
+        <title>Galeria</title>
+        <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.css">
+    </head>
+  <body>
+
+    <div class="container" ng-controller="MainCtrl">
+
+      <div class="header">
+          <ul class="nav nav-pills pull-right">
+              <li ng-click="changeLanguage('es')" ng-class="{'active':lang === 'es'}">
+                <a href="#">{{ "ES_BUTTON" | translate }}</a>
+              </li>
+              <li ng-click="changeLanguage('en')" ng-class="{'active':lang === 'en'}">
+                <a href="#">{{ "EN_BUTTON" | translate }}</a>
+              </li>
+          </ul>
+          <h3 class="text-muted">webapp</h3>
+      </div>
+
+      <div class="jumbotron">
+          <h1>{{ "WELCOME" | translate }}</h1>
+          <p class="lead">By super Carl Sagan!</p>
+      </div>
+
+      <div class="row marketing">
+          <div class="col-lg-6">
+              <h4 translate="DESCRIPTION_H4"></h4>
+              <p translate="DESCRIPTION"></p>
+
+              <h4 translate>QUOTE_H4</h4>
+              <p translate>QUOTE</p>
+
+              <a href="{{'LINK' | translate }}">wikipedia</a>
+          </div>
+      </div>
+
+      <div class="footer">
+          <h4>Angular translate</h4>
+          <p><a href="http://angular-translate.github.io/">i18n for your Angular apps, made easy</a></p>
+      </div>
+
+    </div>
+
+    <!-- bibliotecas -->
+    <script src="../../bower_components/angular/angular.js"></script>
+    <script src="../../bower_components/angular-translate/angular-translate.js"></script>
+    <script src="../../bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+
+    <!-- main.js -->
+    <script src="app.js"></script>
+
+</body>
+</html>

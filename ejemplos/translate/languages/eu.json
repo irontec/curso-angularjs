@@ -1,0 +1,36 @@
+{
+	/*
+	// Main
+	"HEADLINE": "Felices fiestas y próspero 2014!",
+	"SUBHEADLINE": "Always a pleasure scaffolding your apps.",
+	"LAST_VIDEOS": "Últimas felicitaciones",
+	"NOTE": "Nota para curiosos",
+	"NOTE_BODY": "Este año los culpables de nuestra curiosa navidad son <a href='http://www.arduino.cc'>Arduino</a>, <a href='http://nodejs.org/''>Node.js</a>, <a href='http://www.mplayerhq.hu/&quot;'>mplayer</a> y <a href='http://jquery.com'>jQuery</a>... Muy pronto el <a href='http://www.youtube.com/user/irontecSL'>making of</a> y el <a href='http://code.irontec.com'>código empleado</a>.",
+
+	// Wizard literals
+	"START_BUTTON": "Felicitar las navidades!",
+	"INTRO_TEXT": "Intro",
+	"PREVIOUS": "Previo",
+	"NEXT": "Siguiente",
+	"CREATE": "Crear",
+	
+	// Form literals
+	"TO": "Nombre de la victima",
+	"FROM": "Nombre del hacker",
+	"EMAIL_TO": "e-mail de la victima",
+	"EMAIL_FROM": "e-mail del hacker",
+	"BODY": "Felicitación",
+	"EMAIL_REQUIRED": "Necesitamos un email!",
+	"EMAIL_INVALID": "Esto no es un email válido ;-)",
+	"TO_INVALID": "¿Cómo se llama la victima?",
+	"FROM_INVALID": "Querrá saber quién le ha enviado esto",
+	"BODY": "Felicitación",
+	"BODY_INVALID": "Necesitamos un texto divertido.",
+
+	// PHOTOS literals
+	"UPLOAD_PHOTO": "Suba una imagen",
+	"TAKE_HEADER": "Saque una foto",	
+	"TAKE_PHOTO_ERROR": "No se puede iniciar la camara. ¿Nos has dado permiso para encenderla?",
+	"TAKE_PHOTO": "Foto!",
+	*/
+}
