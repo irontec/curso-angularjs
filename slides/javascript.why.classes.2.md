@@ -12,5 +12,5 @@ Coche.prototype = {
     }
 }
 
-Coche coche = new Coche(3);
+var coche = new Coche(3);
 ```
