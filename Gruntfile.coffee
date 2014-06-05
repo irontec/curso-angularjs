@@ -100,7 +100,7 @@ module.exports = (grunt) ->
                 message: 'Built from %sourceCommit% on branch %sourceBranch%'
             pages:
                 options:
-                    remote: 'git@github.com:jonanh/angularjs.git'
+                    remote: 'git@github.com:irontec/curso-angularjs.git'
                     branch: 'gh-pages'
         
 
