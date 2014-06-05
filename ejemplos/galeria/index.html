@@ -4,38 +4,7 @@
         <meta charset="utf-8">
         <title>Galeria</title>
         <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.css">
-        <style>
-        .fileinput-button {
-          position: relative;
-          overflow: hidden;
-        }
-
-        .fileinput-button input {
-            position: absolute;
-            top: 0;
-            right: 0;
-            margin: 0;
-            opacity: 0;
-            -ms-filter: 'alpha(opacity=0)';
-            font-size: 200px;
-            direction: ltr;
-            cursor: pointer;
-        }
-
-        .drop-box {
-            color: #444;
-            background: #F8F8F8;
-            border: 5px dashed #DDD;
-            text-align: center;
-            padding: 45px 0px; 
-            margin-top:20px;
-        }
-
-        .drop-box.dragover {
-            border: 5px dashed #AAA;
-            background: #DDD;
-        }
-        </style>
+        <link rel="stylesheet" href="style.css">
     </head>
   <body>
     
@@ -43,46 +12,42 @@
 
       <!-- subir imagenes -->
 
-      <div ng-show="dropSupported" class="drop-box" 
+      <div class="well"
+          ng-class="{'drop-box': dropSupported}" 
           ng-file-drop="selectFiles($files);" 
           ng-file-drop-available="dropSupported=true">
 
-          Arrastrar para añadir
+          <h4 ng-show="dropSupported">Arrastrar para añadir</h4>
+
+          <!-- webcam -->
+          <webcam class="well" 
+            on-stream="cameraStream(stream,video)" 
+            on-error="cameraError(err)"
+            on-streaming="cameraSuccess(video)"
+            placeholder=""
+            ng-show="!webcamError">
+            <div class="alert alert-error" ng-show="webcamError">
+                <span>Error!</span>
+            </div>
+            <div ng-show="!video && !webcamError">
+                <span>Esperando a conectar</span>
+            </div>
+          </webcam>
 
           <span class="btn btn-success fileinput-button">
             <i class="glyphicon glyphicon-plus"></i>
             <span>Añadir</span>
             <input type="file" name="file" multiple="" ng-file-select="selectFiles($files)" />
           </span>
-      </div>
 
-      <div ng-show="!dropSupported" ng-file-drop-available="dropSupported=true" class="drop-box well">
-          <span class="btn btn-success fileinput-button">
-            <i class="glyphicon glyphicon-plus"></i>
-            <span>Añadir</span>
-            <input type="file" name="file" multiple="" ng-file-select="selectFiles($files)" />
-          </span>
+          <button class="btn btn-large" ng-click="makeSnapshot()" ng-disabled="!video">Foto!</button>
       </div>
-
-      <!-- webcam -->
-      <webcam class="well" 
-        on-stream="cameraStream(stream,video)" 
-        on-error="cameraError(err)"
-        on-streaming="cameraSuccess(video)"
-        placeholder="">
-        <div class="alert alert-error" ng-show="webcamError">
-            <span>Error!</span>
-        </div>
-        <div ng-show="!video && !webcamError">
-            <span>Esperando a conectar</span>
-        </div>
-      </webcam>
 
       <!-- listar imagenes -->
       <ul class="upload">
-        <li class="gallery" ng-repeat="file in files" ng-class="{'selected':file.selected}">
+        <li class="gallery" ng-repeat="file in items" ng-class="{'selected':file.selected}">
           <a ng-click="select(file)">
-            <img ng-src="{{photo(file)}}">
+            <img ng-src="{{file.dataUrl || file.url + '/' + file.cid}}">
           </a>
         </li>
       </ul>

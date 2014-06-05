@@ -1,24 +1,18 @@
 'use strict';
 
-var url = "";
-
-
 var app = angular.module('app', [
   'ngResource',
   'angularFileUpload',
-  'webcam',
-  'pascalprecht.translate'
+  'webcam'
 ]);
 
 
-app.run(['$rootScope', function($rootScope) {
-  $rootScope.lang = "es";
-}]);
-
-
-app.factory('Image', ['$resource', function($resource) {
-    return $resource('http://ironangularjs.herokuapp.com/imagenes/:id', {id: '@cid'}, {update: {method: 'PUT'}});
-}]);
+app.factory('Image', function($resource) {
+    var url = 'http://localhost:3000/imagenes';
+    var resource = $resource(url + '/:id', {id: '@cid'}, {update: {method: 'PUT'}});
+    resource.prototype.url = url;
+    return resource;
+});
 
 
 app.controller('MainCtrl', function (
@@ -27,10 +21,11 @@ app.controller('MainCtrl', function (
     $location, 
     $http, 
     $timeout, 
-    Image,
-    $translate
+    Image
 ) {
-    $scope.items = Image.query();
+    $scope.items = Image.query(function (items) {
+        $scope.items = items;
+    });
 
     $scope.destroy = function(index) {
         Image.remove({id: $scope.items[index].id}, function() {
@@ -42,62 +37,16 @@ app.controller('MainCtrl', function (
      * Photos
      */
 
-    var dataURLtoBlob = function (dataURL) {
-        var binary = atob(dataURL.split(',')[1]);
-        var array = [];
-        for(var i = 0; i < binary.length; i++) {
-            array.push(binary.charCodeAt(i));
-        }
-        return new Blob([new Uint8Array(array)], {type: 'image/png'});
-    }
-
     $scope.uploadFile = function(file) {
-        // if is an image of the camera get blob 
-        if (!file.file) {
-            file.file = dataURLtoBlob(file.dataUrl);
-        }
-
-        var response = function (response) {
-            file.id = response.data.original;
-            angular.forEach(response.data.sons, function (hash) {
-                $scope.files.push({id: hash});
-            });
-        }
-
-        // FIXME
-        var progress = function (evt) {
-            file.progress = parseInt(100.0 * evt.loaded / evt.total);
-        };
-        
-        file.progress = 0;
         file.upload = $upload.upload({
-            url : files_url,
+            url : Image.prototype.url,
             file: file.file,
             fileFormDataName: 'file'
+        }).then(function () {
+            console.log("done", arguments);
+        }, function () {
+            console.log("fail", arguments);
         });
-        file.upload.then(response, null, progress);
-    }
-
-    $scope.uploadFiles = function () {
-        for (var i = 0; i < $scope.selected.length; i++ ) {
-            var $file = $scope.selected[i];
-            
-            // Upload if we don't have its hash
-            if (!$file.id) {
-                $scope.uploadFile($file);
-            }
-            var name = "image" + String.fromCharCode("A".charCodeAt(0) + i) + "Name";
-            $scope.data[name] = $file.id;
-        }
-    }
-
-    $scope.photo = function (file) {
-        if (file.dataUrl)
-            return file.dataUrl;
-        if (file.id)
-            return image_url + file.id;
-
-        return null;
     }
 
     $scope.fileAbort = function(file) {
@@ -119,7 +68,7 @@ app.controller('MainCtrl', function (
                 fileReader.onload = function(e) {
                     $timeout(function() {
                         file.dataUrl = e.target.result;
-                        $scope.files.push(file);
+                        $scope.items.push(file);
                     });
                 }
                 $scope.uploadFile(file);
@@ -133,6 +82,8 @@ app.controller('MainCtrl', function (
 
     $scope.video = null;
     $scope.webcamError = false;
+
+    // Funciones llamadas desde la directiva
 
     $scope.cameraError = function (err) {
         $scope.$apply(
@@ -153,7 +104,19 @@ app.controller('MainCtrl', function (
         $scope.video = videoElem;
     };
 
+
+    // Magia para sacar una foto del stream y convertirla en un dataUrl
+
     var hiddenCanvas = document.createElement('canvas');
+
+    var dataURLtoBlob = function (dataURL) {
+        var binary = atob(dataURL.split(',')[1]);
+        var array = [];
+        for(var i = 0; i < binary.length; i++) {
+            array.push(binary.charCodeAt(i));
+        }
+        return new Blob([new Uint8Array(array)], {type: 'image/png'});
+    }
 
     $scope.makeSnapshot = function () {
         if (!$scope.video) return
@@ -163,8 +126,14 @@ app.controller('MainCtrl', function (
         var ctx = hiddenCanvas.getContext('2d');
 
         ctx.drawImage($scope.video, 0, 0, $scope.video.width, $scope.video.height);
-        var file = {dataUrl: hiddenCanvas.toDataURL()};
-        $scope.files.push(file);
+
+        var dataUrl = hiddenCanvas.toDataURL();
+        var file = {
+            dataUrl: dataUrl,
+            file: dataURLtoBlob(dataUrl)
+        };
+        $scope.items.push(file);
+        $scope.uploadFile(file);
     };
 
     $scope.closeCamera = function () {
