@@ -1,0 +1,39 @@
+<!doctype html>
+<html ng-app="app">
+    <head>
+        <meta charset="utf-8">
+        <title>nvd3</title>
+        <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="../../bower_components/nvd3/src/nv.d3.css">
+    </head>
+  <body>
+    
+    <div class="container" ng-controller="MainCtrl">
+
+    <nvd3-stacked-area-chart
+            data="exampleData"
+            id="exampleId"
+            showXAxis="true"
+            showYAxis="true"
+            width="800"
+            height="400"
+            tooltips="true"
+            interactive="true"
+            margin="{left:50,top:50,bottom:100,right:100}"
+            objectEquality="true"
+            showLegend="true"
+        >
+            <svg></svg>
+    </nvd3-stacked-area-chart>
+
+    </div>
+
+    <script src="../../bower_components/angular/angular.js"></script>
+    <script src="../../bower_components/d3/d3.js"></script>
+    <script src="../../bower_components/nvd3/nv.d3.js"></script>
+    <script src="../../bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js"></script>
+
+    <script src="main.js"></script>
+
+</body>
+</html>
