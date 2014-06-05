@@ -1,0 +1,62 @@
+<h1>Lista de la compra</h1>
+
+<div class="row">
+    <div class="col-xs-8">
+        <input type="text" class="form-control" placeholder="Buscar" ng-model="busqueda">
+    </div>
+    <div class="btn-group">
+        <label class="btn btn-success" ng-model="campo" btn-radio="'nombre'">Nombre</label>
+        <label class="btn btn-success" ng-model="campo" btn-radio="'precio'">Precio</label>
+    </div>
+    <div class="btn-group">
+        <label class="btn btn-success" ng-model="reverse" btn-radio="false">Ascendente</label>
+        <label class="btn btn-success" ng-model="reverse" btn-radio="true">Descendente</label>
+    </div>
+</div>
+
+<div class="row">
+    <pagination total-items="lista.length" ng-model="currentPage" data-items-per-page="maxSize" data-boundary-links="true" data-max-size="8"></pagination>
+    <a href="#/nuevo" class="btn btn-primary pull-right">Nuevo</a>
+</div>
+
+<div class="row">
+<table class="table table-hover table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Precio</th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr 
+            ng-repeat="elemento in lista | filter:busqueda | orderBy:campo:reverse | startFrom: (currentPage - 1) * maxSize | limitTo: maxSize"
+            ng-click="elemento.seleccionado = !elemento.seleccionado"
+            ng-class="{'success':elemento.seleccionado}"
+        >
+            <td>
+                {{elemento.producto}}
+            </td>
+            <td>
+                {{elemento.precio | currency:"€" }}
+            </td>
+            <td>
+                <div class="pull-right">
+                    <a class="btn btn-success" href="#/{{elemento.cid}}">Editar</a>
+                    <button class="btn btn-danger" ng-click="eliminar($index)">Borrar</button>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <th></th>
+        <th>Total: {{ lista | sumaprecios | currency:"€"}}</th>
+        <th></th>
+    </tfoot>
+</table>
+</div>
+
+<div class="row">
+    <pagination total-items="lista.length" ng-model="currentPage" data-items-per-page="maxSize" data-boundary-links="true" data-max-size="8"></pagination>
+</div>
+

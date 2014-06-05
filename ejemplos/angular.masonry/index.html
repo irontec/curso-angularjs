@@ -1,0 +1,111 @@
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>AngularJS Masonry Directive</title>
+        <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+        <style>
+            body {
+                margin-top: 1em;
+            }
+
+            .masonry-brick {
+                margin: 1em;
+                display: none;
+                position: relative;
+                width: 400px;
+                height: 200px;
+            }
+
+            .masonry-brick span {
+                position: absolute;
+                bottom: 10px;
+                right: 10px;
+                font-weight: bold;
+                font-size: 40px;
+                background: rgba(0,0,0,.6);
+                padding: 10px;
+                color: white;
+            }
+
+            .masonry-brick.loaded {
+                display: block;
+            }
+        </style>
+    </head>
+    <body class="container" ng-app="masonryApp" ng-controller="DemoCtrl">
+        <div class="hero-unit">
+            <h1>angular-masonry</h1>
+
+            <p>A directive to use masonry with AngularJS.</p>
+        </div>
+        <div class="form-inline">
+            <div class="btn-group">
+                <button class="btn btn-primary" ng-click="add()">Add</button>
+                <button class="btn btn-danger" ng-click="remove()">Remove</button>
+            </div>
+            <div class="btn-group">
+                <label class="btn btn-primary" ng-model="predicate" btn-radio="null">Unordered</label>
+                <label class="btn btn-primary" ng-model="predicate" btn-radio="'value'">Ordered</label>
+            </div>
+            <div class="btn-group">
+                <label class="btn btn-primary" ng-model="reverse" btn-radio="false">Forward</label>
+                <label class="btn btn-primary" ng-model="reverse" btn-radio="true">Backwards</label>
+            </div>
+            <input type="text" class="form-control" ng-model="search.value">
+        </div>
+        <div masonry>
+            <div class="masonry-brick" ng-repeat="brick in bricks | orderBy:predicate:reverse | filter:search">
+                <span>{{brick.value}}</span>
+                <img ng-src="{{ brick.src }}" alt="A masonry brick">
+            </div>
+        </div>
+
+        <script src="bower_components/jquery/jquery.js"></script>
+        <script src="bower_components/jquery-bridget/jquery.bridget.js"></script>
+        <script src="bower_components/get-style-property/get-style-property.js"></script>
+        <script src="bower_components/get-size/get-size.js"></script>
+        <script src="bower_components/eventEmitter/EventEmitter.js"></script>
+        <script src="bower_components/eventie/eventie.js"></script>
+        <script src="bower_components/doc-ready/doc-ready.js"></script>
+        <script src="bower_components/matches-selector/matches-selector.js"></script>
+        <script src="bower_components/outlayer/item.js"></script>
+        <script src="bower_components/outlayer/outlayer.js"></script>
+        <script src="bower_components/masonry/masonry.js"></script>
+        <script src="bower_components/imagesloaded/imagesloaded.js"></script>
+
+        <script src="bower_components/angular/angular.min.js"></script>
+        <script src="bower_components/angular-masonry/angular-masonry.js"></script>
+        <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+
+        <script>
+            angular.module('masonryApp', ['wu.masonry', 'ui.bootstrap']).
+                controller('DemoCtrl', function ($scope, $filter) {
+                    function genBrick() {
+                        return {
+                            src: 'http://lorempixel.com/g/400/200/?' + ~~(Math.random() * 10000),
+                            value: ~~(Math.random() * 100)
+                        };
+                    };
+
+                    $scope.bricks = $scope.rbricks = [
+                        genBrick(),
+                        genBrick(),
+                        genBrick()
+                    ];
+
+                    $scope.add = function add() {
+                        $scope.bricks.push(genBrick());
+                    };
+
+                    $scope.remove = function remove() {
+                        $scope.bricks.splice(
+                            ~~(Math.random() * $scope.bricks.length),
+                            1
+                        )
+                    };
+                });
+        </script>
+    </body>
+</html>

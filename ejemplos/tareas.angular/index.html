@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en" ng-app>
+    <head>
+        <meta charset="utf-8">
+        <title>TODO List</title>
+
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    </head>
+    <body ng-controller="TodoCtrl">
+        <div class="container">
+            <h1>Lista de cosas por realizar</h1>
+            <ol>
+                <li ng-repeat="elemento in lista">{{elemento.nombre}}<button class="btn pull-right" ng-click="eliminar($index)">Borrar</button></li>
+            </ol>
+            <form class="form-inline" ng-submit="anadir()">
+                <div class="form-group">
+                    <input class="form-control" placeholder="Introduce una tarea" ng-model="nuevo" required>
+                    <button type="submit" class="btn btn-primary" ng-disabled="!nuevo">Añadir tarea</button>
+                </div>
+            </form>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.10/angular.min.js"></script>
+        <script src="main.js"></script>
+    </body>
+</html>
