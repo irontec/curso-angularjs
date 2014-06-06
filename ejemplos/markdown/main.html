@@ -1,0 +1,86 @@
+<html ng-app='app'>
+    <head>
+
+        <script src="../../bower_components/bootstrap/dist/css/bootstrap.css"></script>
+        <link rel="stylesheet" href="pagedown/Markdown.Editor.css">
+
+        <style>
+          table { border-collapse: collapse; width: 100%; margin:20px 0px;}
+          td, th { border:1px solid black; padding: 10px; }
+          slider { display: block; }
+
+          .hovering-textarea-container {
+            position:relative
+            margin-top: 0.3em;
+            padding-right: 70px;
+          }
+          .hovering-textarea-container:hover {
+            background-color:#f5f5f5
+          }
+          .hovering-textarea-container:hover textarea.jfk-textinput,
+          .hovering-textarea-container:hover input.jfk-textinput{
+            border:1px solid #d9d9d9;
+            border-top:1px solid #c0c0c0
+          }
+
+          input.jfk-textinput, textarea.jfk-textinput{
+            -webkit-border-radius:1px;
+            -moz-border-radius:1px;
+            border: 1px solid #fff;
+            font-size:13px;
+            height:auto; width: 100%;
+            padding:3px 8px 1px 6px;margin-left:18px
+            -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none;
+          }
+          input.jfk-textinput:focus{
+            -webkit-box-shadow:inset 0 1px 2px rgba(0,0,0,0.3);
+            -moz-box-shadow:inset 0 1px 2px rgba(0,0,0,0.3);
+            box-shadow:inset 0 1px 2px rgba(0,0,0,0.3);
+            border:1px solid #4d90fe;
+            outline:none
+          }
+          input.jfk-textinput.ss-title {
+            padding: 3px 8px 1px 6px;
+            margin-left: 18px;
+          }
+          input.ss-title {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin: 0.3em 0.2em 0.3em 0;
+          }
+        </style>
+    </head>
+    <body>
+
+
+        <div ng-controller="ItemCtrl">
+
+
+          <pagedown ng-model="pagedown"></pagedown>
+
+          <p>Escribimos sobre el modelo: {{ pagedown }}</p>
+        </div>
+
+        <!-- Load scripts -->
+
+        <script src="../../bower_components/jquery/jquery.js"></script>
+
+        <script src="../../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+
+        <script src="pagedown/Markdown.Converter.js"></script>
+        <script src="pagedown/Markdown.Editor.js"></script>
+        <script src="pagedown/Markdown.Sanitizer.js"></script>
+
+        <script src="../../bower_components/angular/angular.js"></script>
+        <script src="angular-pagedown.js"></script>
+        <script>
+          var app = angular.module('app', ['angular-pagedown']);
+          app.controller('ItemCtrl', ['$scope', function($scope){
+            'use strict';
+
+
+          }]);
+
+        </script>
+    </body>
+</html>
