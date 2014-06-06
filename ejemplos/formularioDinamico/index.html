@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" ng-app="app">
+    <head>
+        <meta charset="utf-8">
+        <title>Lista de la compra</title>
+        <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.css">
+    </head>
+    <body ng-controller="ListaCtrl">
+        <div class="container">
+
+            <h1>Formulario dinámico</h1>
+
+            Since you cannot dynamically generate the name attribute of input elements using interpolation, you have to wrap each set of repeated inputs in an ngForm directive and nest these in an outer form element.
+
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Tipo</th>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="elemento in campos">
+                        <td>
+                            {{elemento.nombre}}
+                        </td>
+                        <td>
+                            {{elemento.tipo}}
+                        </td>
+                        <td>
+                            <button class="btn pull-right" ng-click="eliminar($index)">Borrar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <form name="formulario" class="form-inline" ng-submit="anadir()">
+
+                <div class="form-group" ng-class="{'has-error': formulario.tipo.$invalid}">
+                    <label for="producto">Tipo</label>
+                    <select class="form-control" name="tipo" ng-model="nuevo.tipo" ng-options="tipo.nombre as tipo.nombre for tipo in tipos" required>
+                </div>
+                
+                <div class="form-group" ng-class="{'has-error': formulario.nombre.$invalid}">
+                    <label for="precio">Nombre</label>
+                    <input type="text" class="form-control" name="nombre" placeholder="Nombre" ng-model="nuevo.nombre" required>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary" ng-disabled="!formulario.$valid">Añadir producto</button>
+                </div>
+            </form>
+
+            <h2>Formulario generado dinamicamente</h2>
+
+            <form class="form" name="outerForm">
+                <div ng-repeat="campo in campos">
+                    <ng-form name="innerForm">
+                        <div class="form-group" ng-class="{'has-error': innerForm.foo.$invalid}">
+                            <label>{{campo.nombre}}</label>
+                            <input type="{{campo.tipo}}"  class="form-control" name="foo" ng-model="resultado" required />
+                        </div>
+                    </ng-form>
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary" ng-disabled="outerForm.$invalid" />
+                </div>
+            </form>
+
+            {{resultado}}
+
+        </div>
+        <script src="../../bower_components/angular/angular.js"></script>
+        <script src="main.js"></script>
+    </body>
+</html>

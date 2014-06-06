@@ -24,7 +24,7 @@
                 </thead>
                 <tbody>
                     <tr 
-                        ng-repeat="elemento in lista | filter:busqueda | orderBy:price"
+                        ng-repeat="elemento in lista | filter:busqueda | orderBy:'precio'"
                         ng-click="elemento.seleccionado = !elemento.seleccionado"
                         ng-class="{'success':elemento.seleccionado}"
                     >

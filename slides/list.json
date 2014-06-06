@@ -93,5 +93,17 @@
         "ejemplos.masonry.md",
         "ejemplos.masonry.2.md",
         "ejemplos.masonry.enlace.md"
+    ], [
+        "directivas.md",
+        "directivas.porques.md",
+        "directivas.angularjs.md",
+        "directivas.como.indicamos.md",
+        "directiva.scope.md",
+        "directiva.scope2.md",
+        "directiva.restriccion.md",
+        "directiva.ejemplo.md",
+        "directiva.testing.md",
+        "directiva.ejemplo2.md",
+        "directiva.testing2.md"
     ]
 ]
